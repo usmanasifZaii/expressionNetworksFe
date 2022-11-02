@@ -1,6 +1,9 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a simple application to manage a list of items.
+
+To run the project successfully first create a new file ".env.development.local" and create env variables as depicted
+in ".env.development.local.example" file
 
 ## Available Scripts
 

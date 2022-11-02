@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Home from "./pages/Home";
+import "@elastic/eui/dist/eui_theme_light.css";
+import { EuiProvider } from "@elastic/eui";
+import Toasts from "./components/Toast/toast";
+import { Routes, Route } from "react-router-dom";
+import CreateItem from "./pages/Item/CreateItem/CreateItem";
+import EditItem from "./pages/Item/EditItem/EditItem";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <EuiProvider colorMode="light">
+    <Toasts />
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="items/create" element={<CreateItem />} />
+      <Route path="items/edit/:id" element={<EditItem />} />
+    </Routes>
+  </EuiProvider>
+);
 
 export default App;
