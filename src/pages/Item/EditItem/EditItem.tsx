@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+
 import ItemForm from "../../../components/ItemForm/ItemForm";
 import { addToast } from "../../../components/Toast/toast";
 import ItemService from "../../../services/item.service";
 import { IItem } from "../../../utils/types";
+import { ITEM_FORM_TYPES } from "../../../utils/constants";
 
 const EditItem = () => {
   const [item, setItem] = useState<IItem>({
@@ -33,7 +35,7 @@ const EditItem = () => {
     setItem(data);
   };
 
-  return <ItemForm type="edit" item={item} />;
+  return <ItemForm type={ITEM_FORM_TYPES.EDIT} item={item} />;
 };
 
 export default EditItem;

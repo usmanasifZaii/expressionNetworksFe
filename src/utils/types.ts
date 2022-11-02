@@ -1,5 +1,3 @@
-import { Moment } from "moment";
-
 export interface IApiResponse {
   data: any;
   error: any;

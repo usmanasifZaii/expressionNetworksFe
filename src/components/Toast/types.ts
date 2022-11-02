@@ -1,5 +1,3 @@
-import { FC } from "react";
-
 export type IToastColor = "primary" | "success" | "warning" | "danger";
 export interface IToast {
   title: string;

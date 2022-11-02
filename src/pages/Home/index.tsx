@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import { useState, Fragment, useEffect } from "react";
 import {
   EuiBasicTable,
   EuiButton,
@@ -6,11 +6,12 @@ import {
   EuiBasicTableColumn,
   CriteriaWithPagination,
 } from "@elastic/eui";
+import moment from "moment";
+import { useNavigate } from "react-router";
+
 import ItemService from "../../services/item.service";
 import { addToast } from "../../components/Toast/toast";
 import { IItem } from "../../utils/types";
-import { useNavigate } from "react-router";
-import moment from "moment";
 
 const Home = () => {
   const [pageIndex, setPageIndex] = useState(0);

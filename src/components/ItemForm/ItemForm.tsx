@@ -1,4 +1,13 @@
 import {
+  useState,
+  ChangeEvent,
+  FC,
+  useEffect,
+  useCallback,
+  FormEvent,
+  useRef,
+} from "react";
+import {
   EuiButton,
   EuiFieldText,
   EuiMarkdownEditor,
@@ -8,21 +17,14 @@ import {
   EuiSpacer,
   EuiFormRow,
 } from "@elastic/eui";
-import {
-  useState,
-  ChangeEvent,
-  FC,
-  useEffect,
-  useCallback,
-  FormEvent,
-  useRef,
-} from "react";
+import { useNavigate } from "react-router";
+import moment from "moment";
+
 import { IItem } from "../../utils/types";
 import { addToast } from "../Toast/toast";
 import { IItemForm } from "./types";
 import ItemService from "../../services/item.service";
-import moment from "moment";
-import { useNavigate } from "react-router";
+import { ITEM_FORM_TYPES } from "src/utils/constants";
 
 const ItemForm: FC<IItemForm> = ({ type, item }) => {
   const [state, setState] = useState<IItem>({
@@ -55,8 +57,8 @@ const ItemForm: FC<IItemForm> = ({ type, item }) => {
   const setItem = () => {
     const temp = { ...item };
     temp.date = moment(item?.date).format("yyyy-MM-DD");
-    console.log(temp.date);
-    if (type === "edit") setState((prev) => ({ ...prev, ...temp }));
+    if (type === ITEM_FORM_TYPES.EDIT)
+      setState((prev) => ({ ...prev, ...temp }));
   };
 
   const fetchTypes = async () => {
@@ -73,7 +75,7 @@ const ItemForm: FC<IItemForm> = ({ type, item }) => {
   };
 
   const getPersistedData = () => {
-    if (type === "edit") return;
+    if (type === ITEM_FORM_TYPES.EDIT) return;
 
     const data = localStorage.getItem("createItem");
     if (data) {
@@ -82,7 +84,7 @@ const ItemForm: FC<IItemForm> = ({ type, item }) => {
   };
 
   const persistData = () => {
-    if (type === "create") {
+    if (type === ITEM_FORM_TYPES.CREATE) {
       localStorage.setItem(`createItem`, JSON.stringify(state));
     }
   };
@@ -105,7 +107,8 @@ const ItemForm: FC<IItemForm> = ({ type, item }) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (type === "edit") {
+
+    if (type === ITEM_FORM_TYPES.EDIT) {
       updateItem();
     } else {
       createNewItem();
@@ -209,7 +212,7 @@ const ItemForm: FC<IItemForm> = ({ type, item }) => {
           />
         </EuiFormRow>
         <EuiButton color={"accent"} type="submit">
-          {type === "edit" ? "Update" : "Create"}
+          {type === ITEM_FORM_TYPES.EDIT ? "Update" : "Create"}
         </EuiButton>
       </form>
     </div>

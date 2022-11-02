@@ -1,7 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+
 import { IApiResponse, IItem } from "../utils/types";
 
-class MapService {
+class ItemService {
   static api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL,
   });
@@ -88,4 +89,4 @@ const handleError = (err: AxiosError) => {
   };
   return res;
 };
-export default MapService;
+export default ItemService;

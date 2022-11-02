@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { EuiGlobalToastList } from "@elastic/eui";
-import { IAddToast, IToast } from "./types";
 import { Toast } from "@elastic/eui/src/components/toast/global_toast_list";
+
+import { IAddToast, IToast } from "./types";
 
 let addToastHandler: (arg: IAddToast) => void;
 let removeAllToastsHandler: () => void;
