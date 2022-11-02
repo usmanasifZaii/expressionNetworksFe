@@ -15,12 +15,14 @@ import {
   useEffect,
   useCallback,
   FormEvent,
+  useRef,
 } from "react";
 import { IItem } from "../../utils/types";
 import { addToast } from "../Toast/toast";
 import { IItemForm } from "./types";
 import ItemService from "../../services/item.service";
 import moment from "moment";
+import { useNavigate } from "react-router";
 
 const ItemForm: FC<IItemForm> = ({ type, item }) => {
   const [state, setState] = useState<IItem>({
@@ -30,16 +32,25 @@ const ItemForm: FC<IItemForm> = ({ type, item }) => {
     title: "",
   });
 
+  const firstRender = useRef(true);
   const [itemTypes, setItemTypes] = useState<Array<EuiSelectOption>>([]);
   const [messages, setMessages] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchTypes();
+    getPersistedData();
   }, []);
 
   useEffect(() => {
     setItem();
   }, [item]);
+
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+    } else persistData();
+  }, [state]);
 
   const setItem = () => {
     const temp = { ...item };
@@ -59,6 +70,21 @@ const ItemForm: FC<IItemForm> = ({ type, item }) => {
       return;
     }
     setItemTypes(data?.map((item: string) => ({ value: item, text: item })));
+  };
+
+  const getPersistedData = () => {
+    if (type === "edit") return;
+
+    const data = localStorage.getItem("createItem");
+    if (data) {
+      setState(JSON.parse(data));
+    }
+  };
+
+  const persistData = () => {
+    if (type === "create") {
+      localStorage.setItem(`createItem`, JSON.stringify(state));
+    }
   };
 
   const handleChange = (
@@ -86,6 +112,15 @@ const ItemForm: FC<IItemForm> = ({ type, item }) => {
     }
   };
 
+  const reset = () => {
+    setState({
+      date: "",
+      type: "",
+      description: " ",
+      title: "",
+    });
+  };
+
   const createNewItem = async () => {
     const { error, hasError } = await ItemService.createItem(state);
     if (hasError) {
@@ -101,6 +136,7 @@ const ItemForm: FC<IItemForm> = ({ type, item }) => {
         color: "success",
         text: "",
       });
+      reset();
       return;
     }
   };
@@ -120,6 +156,7 @@ const ItemForm: FC<IItemForm> = ({ type, item }) => {
         color: "success",
         text: "",
       });
+      navigate("/");
       return;
     }
   };
@@ -172,7 +209,7 @@ const ItemForm: FC<IItemForm> = ({ type, item }) => {
           />
         </EuiFormRow>
         <EuiButton color={"accent"} type="submit">
-          Create
+          {type === "edit" ? "Update" : "Create"}
         </EuiButton>
       </form>
     </div>

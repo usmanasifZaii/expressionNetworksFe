@@ -119,7 +119,12 @@ const Home = () => {
   return (
     <Fragment>
       <EuiSpacer size="l" />
-      <EuiButton color={"accent"} onClick={() => {}}>
+      <EuiButton
+        color={"accent"}
+        onClick={() => {
+          navigate("/item/create");
+        }}
+      >
         Create Item
       </EuiButton>
       <EuiSpacer size="l" />

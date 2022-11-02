@@ -11,7 +11,7 @@ const App = () => (
     <Toasts />
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="items/create" element={<CreateItem />} />
+      <Route path="item/create" element={<CreateItem />} />
       <Route path="items/edit/:id" element={<EditItem />} />
     </Routes>
   </EuiProvider>
