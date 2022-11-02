@@ -2,8 +2,8 @@
 
 This project is a simple application to manage a list of items.
 
-To run the project successfully first create a new file ".env.development.local" and create env variables as depicted
-in ".env.development.local.example" file
+1. To run the project successfully first create a new file ```.env.development.local```
+2. create env variables as depicted in ```.env.development.local.example``` file
 
 ## Available Scripts
 
